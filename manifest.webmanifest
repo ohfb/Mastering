@@ -1,0 +1,9 @@
+{
+  "name": "Suno Master Fixer",
+  "short_name": "Master Fix",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#08080c",
+  "theme_color": "#0b0b10",
+  "description": "Clean and master AI-generated music locally, then export a 24-bit WAV."
+}

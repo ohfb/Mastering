@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b0b10" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Master Fix" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>Suno Master Fixer</title>
+  <style>
+    :root{color-scheme:dark;--bg:#08080c;--card:#14141c;--muted:#9a9aad;--text:#f7f7fb;--accent:#8b5cf6;--accent2:#22d3ee;--danger:#fb7185;--ok:#34d399}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;background:radial-gradient(circle at 20% 0%,#20143b 0,transparent 35%),radial-gradient(circle at 100% 30%,#093844 0,transparent 30%),var(--bg);color:var(--text);min-height:100vh}
+    main{width:min(760px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+    h1{font-size:clamp(2rem,8vw,3.5rem);line-height:.95;margin:8px 0 10px;letter-spacing:-.055em} .sub{color:var(--muted);margin:0 0 20px;line-height:1.45}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:16px;margin:14px 0;box-shadow:0 18px 60px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
+    .drop{display:block;border:1.5px dashed rgba(255,255,255,.22);border-radius:20px;padding:24px;text-align:center;cursor:pointer;background:rgba(255,255,255,.025)}input[type=file]{display:none}
+    .file-name{font-weight:750;margin-top:8px;word-break:break-word}.tiny{font-size:.82rem;color:var(--muted)}
+    .row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:14px 0}.row label{font-weight:700}.value{font-variant-numeric:tabular-nums;color:var(--accent2);font-weight:800}
+    input[type=range]{width:100%;accent-color:var(--accent);height:34px} select{width:100%;background:#0d0d14;color:var(--text);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:13px;font-size:1rem}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{appearance:none;border:0;border-radius:16px;padding:15px 16px;font-size:1rem;font-weight:850;color:white;background:linear-gradient(135deg,var(--accent),#6d28d9);cursor:pointer;min-height:52px}.btn.secondary{background:#20202b}.btn.export{background:linear-gradient(135deg,#0ea5e9,#14b8a6)}.btn:disabled{opacity:.42;cursor:not-allowed}
+    .meter{height:12px;border-radius:999px;background:#07070b;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.meter>div{height:100%;width:0;background:linear-gradient(90deg,var(--ok),#facc15,var(--danger));transition:width .08s linear}
+    audio{width:100%;margin-top:12px}.status{min-height:24px;color:var(--muted);font-weight:700}.tag{display:inline-flex;padding:7px 10px;border-radius:999px;background:rgba(139,92,246,.15);color:#c4b5fd;font-size:.78rem;font-weight:850;margin-right:6px;margin-bottom:6px}
+    details{color:var(--muted)}summary{color:var(--text);font-weight:800;cursor:pointer}.footer{font-size:.75rem;color:#76768a;text-align:center;padding-top:6px}
+  </style>
+</head>
+<body>
+<main>
+  <span class="tag">iPhone-ready</span><span class="tag">Private processing</span><span class="tag">WAV export</span>
+  <h1>Suno Master Fixer</h1>
+  <p class="sub">Clean harsh AI artifacts, tighten the low end, add clarity, control peaks, and export a fresh 24-bit WAV directly on your phone.</p>
+
+  <section class="card">
+    <label class="drop" for="fileInput">
+      <strong>Tap to choose your Suno track</strong>
+      <div class="tiny">MP3, M4A, WAV, AIFF, or anything Safari can decode</div>
+      <div id="fileName" class="file-name"></div>
+    </label>
+    <input id="fileInput" type="file" accept="audio/*,.wav,.aif,.aiff,.m4a,.mp3" />
+    <audio id="originalPlayer" controls hidden></audio>
+  </section>
+
+  <section class="card">
+    <label for="preset"><strong>Mastering preset</strong></label>
+    <select id="preset">
+      <option value="balanced">Balanced Clean Master</option>
+      <option value="crisp">Crisp + Razor Transients</option>
+      <option value="warm">Warm + Smooth</option>
+      <option value="loud">Loud but Controlled</option>
+      <option value="vocal">Vocal Clarity</option>
+    </select>
+
+    <div class="row"><label for="clean">Artifact cleanup</label><span id="cleanVal" class="value">55%</span></div>
+    <input id="clean" type="range" min="0" max="100" value="55" />
+
+    <div class="row"><label for="clarity">Clarity</label><span id="clarityVal" class="value">45%</span></div>
+    <input id="clarity" type="range" min="0" max="100" value="45" />
+
+    <div class="row"><label for="bass">Low-end control</label><span id="bassVal" class="value">60%</span></div>
+    <input id="bass" type="range" min="0" max="100" value="60" />
+
+    <div class="row"><label for="punch">Punch</label><span id="punchVal" class="value">50%</span></div>
+    <input id="punch" type="range" min="0" max="100" value="50" />
+
+    <div class="row"><label for="loudness">Output loudness</label><span id="loudnessVal" class="value">-10 LUFS-ish</span></div>
+    <input id="loudness" type="range" min="-14" max="-7" step="1" value="-10" />
+  </section>
+
+  <section class="card">
+    <div class="controls">
+      <button id="processBtn" class="btn" disabled>Fix + Master</button>
+      <button id="resetBtn" class="btn secondary">Reset</button>
+    </div>
+    <div id="status" class="status" aria-live="polite"></div>
+    <div class="meter"><div id="meterFill"></div></div>
+    <audio id="processedPlayer" controls hidden></audio>
+    <button id="downloadBtn" class="btn export" style="width:100%;margin-top:12px" disabled>Export 24-bit WAV</button>
+  </section>
+
+  <section class="card">
+    <details>
+      <summary>What the app actually does</summary>
+      <p>It uses a cleanup high-pass filter, dynamic-style multiband EQ shaping, low-mid mud reduction, harshness control, presence and air enhancement, bus compression, soft saturation, peak limiting, DC removal, and final normalization. Processing stays inside your browser.</p>
+    </details>
+  </section>
+  <div class="footer">Best results: start with the highest-quality Suno WAV available. Keep your phone awake while rendering long tracks.</div>
+</main>
+<script>
+const $ = (id) => document.getElementById(id);
+const fileInput = $('fileInput'), processBtn = $('processBtn'), downloadBtn = $('downloadBtn');
+const statusEl = $('status'), meterFill = $('meterFill');
+let sourceBuffer = null, originalURL = null, processedBlob = null, processedURL = null;
+
+const ranges = ['clean','clarity','bass','punch'];
+ranges.forEach(id => $(id).addEventListener('input', () => $(id+'Val').textContent = $(id).value+'%'));
+$('loudness').addEventListener('input', () => $('loudnessVal').textContent = $('loudness').value+' LUFS-ish');
+
+const presets = {
+  balanced:{clean:55,clarity:45,bass:60,punch:50,loudness:-10},
+  crisp:{clean:62,clarity:72,bass:58,punch:72,loudness:-9},
+  warm:{clean:45,clarity:30,bass:65,punch:42,loudness:-11},
+  loud:{clean:55,clarity:52,bass:72,punch:65,loudness:-8},
+  vocal:{clean:70,clarity:68,bass:48,punch:45,loudness:-10}
+};
+$('preset').addEventListener('change', e => {
+  const p=presets[e.target.value]; Object.entries(p).forEach(([k,v])=>{$(k).value=v;$(k).dispatchEvent(new Event('input'));});
+});
+
+fileInput.addEventListener('change', async () => {
+  const file = fileInput.files[0]; if(!file) return;
+  cleanupUrls(); processedBlob=null; downloadBtn.disabled=true; $('processedPlayer').hidden=true;
+  $('fileName').textContent = file.name;
+  originalURL = URL.createObjectURL(file); $('originalPlayer').src=originalURL; $('originalPlayer').hidden=false;
+  setStatus('Decoding audio…',15);
+  try{
+    const ab=await file.arrayBuffer();
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    sourceBuffer=await ctx.decodeAudioData(ab.slice(0)); await ctx.close();
+    processBtn.disabled=false;
+    setStatus(`Ready — ${formatTime(sourceBuffer.duration)}, ${sourceBuffer.sampleRate/1000} kHz`,0);
+  }catch(err){ sourceBuffer=null; processBtn.disabled=true; setStatus('Could not decode this file. Try a WAV or M4A export.',0); console.error(err); }
+});
+
+processBtn.addEventListener('click', async () => {
+  if(!sourceBuffer) return;
+  processBtn.disabled=true; downloadBtn.disabled=true; setStatus('Cleaning and mastering…',20);
+  try{
+    const sr=Math.min(48000, sourceBuffer.sampleRate || 48000);
+    const offline=new OfflineAudioContext(2, Math.ceil(sourceBuffer.duration*sr), sr);
+    const renderedSource=offline.createBuffer(2, Math.ceil(sourceBuffer.duration*sr), sr);
+    for(let ch=0;ch<2;ch++){
+      const src=sourceBuffer.getChannelData(Math.min(ch,sourceBuffer.numberOfChannels-1));
+      const dst=renderedSource.getChannelData(ch);
+      if(sourceBuffer.sampleRate===sr){dst.set(src.subarray(0,dst.length));}
+      else { for(let i=0;i<dst.length;i++){const pos=i*sourceBuffer.sampleRate/sr, a=Math.floor(pos), b=Math.min(a+1,src.length-1), t=pos-a;dst[i]=(src[a]||0)*(1-t)+(src[b]||0)*t;} }
+    }
+    const s=offline.createBufferSource(); s.buffer=renderedSource;
+    const clean=+$('clean').value/100, clarity=+$('clarity').value/100, bass=+$('bass').value/100, punch=+$('punch').value/100;
+
+    const hp=biquad(offline,'highpass',24+clean*16,0,0.7);
+    const rumble=biquad(offline,'lowshelf',80,-1.5-clean*1.5,0.8);
+    const mud=biquad(offline,'peaking',300,-1-clean*3.3,1.0);
+    const box=biquad(offline,'peaking',650,-clean*1.6,1.2);
+    const harsh=biquad(offline,'peaking',3600,-clean*3.2,1.4);
+    const presence=biquad(offline,'peaking',2200,clarity*2.5,0.9);
+    const air=biquad(offline,'highshelf',9000,clarity*3.8,0.75);
+    const lowPunch=biquad(offline,'peaking',95,(bass-.5)*3.2,0.85);
+
+    const comp=offline.createDynamicsCompressor();
+    comp.threshold.value=-18-punch*8; comp.knee.value=18; comp.ratio.value=2.2+punch*1.8; comp.attack.value=.012-punch*.006; comp.release.value=.16;
+    const sat=offline.createWaveShaper(); sat.curve=makeSoftClipCurve(1.2+punch*1.3); sat.oversample='4x';
+    const makeup=offline.createGain(); makeup.gain.value=1.05+punch*.18;
+    const limiter=offline.createDynamicsCompressor(); limiter.threshold.value=-2.0; limiter.knee.value=0; limiter.ratio.value=20; limiter.attack.value=.001; limiter.release.value=.07;
+    s.connect(hp); hp.connect(rumble); rumble.connect(lowPunch); lowPunch.connect(mud); mud.connect(box); box.connect(harsh); harsh.connect(presence); presence.connect(air); air.connect(comp); comp.connect(sat); sat.connect(makeup); makeup.connect(limiter); limiter.connect(offline.destination);
+    s.start();
+    const progress=fakeProgress();
+    const rendered=await offline.startRendering(); clearInterval(progress); setStatus('Final peak control and WAV encoding…',88);
+    applyFinalGain(rendered, +$('loudness').value);
+    processedBlob=encodeWav24(rendered);
+    if(processedURL) URL.revokeObjectURL(processedURL); processedURL=URL.createObjectURL(processedBlob);
+    $('processedPlayer').src=processedURL; $('processedPlayer').hidden=false; downloadBtn.disabled=false;
+    setStatus('Done. Clean, controlled, and ready to export.',100);
+  }catch(err){console.error(err);setStatus('Processing failed. Close other apps and try again with a shorter file.',0);} finally{processBtn.disabled=false;}
+});
+
+downloadBtn.addEventListener('click',()=>{
+  if(!processedBlob) return; const a=document.createElement('a'); a.href=processedURL;
+  const base=(fileInput.files[0]?.name||'suno-track').replace(/\.[^.]+$/,''); a.download=base+' - Fixed Master 24bit.wav'; document.body.appendChild(a); a.click(); a.remove();
+});
+$('resetBtn').addEventListener('click',()=>location.reload());
+
+function biquad(ctx,type,freq,gain=0,q=.7){const n=ctx.createBiquadFilter();n.type=type;n.frequency.value=freq;n.gain.value=gain;n.Q.value=q;return n}
+function makeSoftClipCurve(amount){const n=65536,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=Math.tanh(amount*x)/Math.tanh(amount)}return c}
+function applyFinalGain(buffer,target){let peak=0;for(let c=0;c<buffer.numberOfChannels;c++){const d=buffer.getChannelData(c);for(let i=0;i<d.length;i++)peak=Math.max(peak,Math.abs(d[i]));}
+  const targetPeak=Math.pow(10,-1/20); let gain=peak?targetPeak/peak:1; const lufsMakeup=Math.pow(10,((-9-target)*0.12)/20); gain=Math.min(gain*lufsMakeup,2.2);
+  for(let c=0;c<buffer.numberOfChannels;c++){const d=buffer.getChannelData(c);let prev=0;for(let i=0;i<d.length;i++){let x=(d[i]-prev*.0005)*gain;prev=d[i];d[i]=Math.max(-.999,Math.min(.999,Math.tanh(x*1.015)/Math.tanh(1.015)));}}
+}
+function encodeWav24(buffer){const channels=2,sr=buffer.sampleRate,frames=buffer.length,bps=3,block=channels*bps,size=44+frames*block;const ab=new ArrayBuffer(size),v=new DataView(ab);let o=0;
+  const str=s=>{for(let i=0;i<s.length;i++)v.setUint8(o++,s.charCodeAt(i))}; str('RIFF');v.setUint32(o,size-8,true);o+=4;str('WAVE');str('fmt ');v.setUint32(o,16,true);o+=4;v.setUint16(o,1,true);o+=2;v.setUint16(o,channels,true);o+=2;v.setUint32(o,sr,true);o+=4;v.setUint32(o,sr*block,true);o+=4;v.setUint16(o,block,true);o+=2;v.setUint16(o,24,true);o+=2;str('data');v.setUint32(o,frames*block,true);o+=4;
+  const L=buffer.getChannelData(0),R=buffer.getChannelData(Math.min(1,buffer.numberOfChannels-1));
+  for(let i=0;i<frames;i++){for(const x0 of [L[i],R[i]]){const x=Math.max(-1,Math.min(1,x0));let s=x<0?Math.round(x*8388608):Math.round(x*8388607);if(s<0)s+=16777216;v.setUint8(o++,s&255);v.setUint8(o++,(s>>8)&255);v.setUint8(o++,(s>>16)&255);}}
+  return new Blob([ab],{type:'audio/wav'});
+}
+function setStatus(t,p){statusEl.textContent=t;meterFill.style.width=p+'%'}
+function fakeProgress(){let p=22;return setInterval(()=>{p=Math.min(82,p+Math.random()*4);meterFill.style.width=p+'%'},350)}
+function formatTime(sec){const m=Math.floor(sec/60),s=Math.round(sec%60).toString().padStart(2,'0');return `${m}:${s}`}
+function cleanupUrls(){if(originalURL)URL.revokeObjectURL(originalURL);if(processedURL)URL.revokeObjectURL(processedURL)}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>

@@ -1,19 +1,11 @@
-# Suno Master Fixer 2
+# Suno Master Fixer v2
 
-Mobile-first browser audio repair and mini-mastering DAW.
+Upload these three files to the root of your `ohfb/Mastering` repository:
 
-## New in v2
-- On-device transient detection
-- Tempo and likely time-signature estimation
-- Vocal / lyric activity estimation
-- Section-change markers
-- One-knob Auto Enhance
-- Tempo adjustment
-- Transient shaping
-- Stereo width
-- De-essing
-- Adaptive mastering profile
-- 24-bit WAV export
+- `index.html`
+- `manifest.webmanifest`
+- `sw.js`
 
-## Important limitation
-GitHub Pages and Safari web apps cannot directly call Apple's Foundation Models / Apple Intelligence framework. That requires a native Swift iOS app. This web version performs its analysis locally using Web Audio and JavaScript.
+Replace the existing files with these versions, then wait for GitHub Pages to rebuild.
+
+Important: because this app uses a service worker, Safari may temporarily show the old version. Close the tab, reopen the site, or clear the website data if needed.

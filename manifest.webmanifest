@@ -5,5 +5,5 @@
   "display": "standalone",
   "background_color": "#08080c",
   "theme_color": "#0b0b10",
-  "description": "Clean and master AI-generated music locally, then export a 24-bit WAV."
+  "description": "Live browser-based mastering with frequency-labeled EQ and 24-bit WAV export."
 }

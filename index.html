@@ -1,247 +1,152 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b0b10" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Master Fix" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <title>Suno Master Fixer</title>
-  <style>
-    :root{color-scheme:dark;--bg:#08080c;--card:#14141c;--muted:#9a9aad;--text:#f7f7fb;--accent:#8b5cf6;--accent2:#22d3ee;--danger:#fb7185;--ok:#34d399}
-    *{box-sizing:border-box}body{margin:0;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;background:radial-gradient(circle at 20% 0%,#20143b 0,transparent 35%),radial-gradient(circle at 100% 30%,#093844 0,transparent 30%),var(--bg);color:var(--text);min-height:100vh}
-    main{width:min(760px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
-    h1{font-size:clamp(2rem,8vw,3.5rem);line-height:.95;margin:8px 0 10px;letter-spacing:-.055em} .sub{color:var(--muted);margin:0 0 20px;line-height:1.45}
-    .card{background:linear-gradient(180deg,rgba(255,255,255,.065),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:16px;margin:14px 0;box-shadow:0 18px 60px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
-    .drop{display:block;border:1.5px dashed rgba(255,255,255,.22);border-radius:20px;padding:24px;text-align:center;cursor:pointer;background:rgba(255,255,255,.025)}input[type=file]{display:none}
-    .file-name{font-weight:750;margin-top:8px;word-break:break-word}.tiny{font-size:.82rem;color:var(--muted)}
-    .row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;margin:14px 0}.row label{font-weight:700}.value{font-variant-numeric:tabular-nums;color:var(--accent2);font-weight:800}
-    input[type=range]{width:100%;accent-color:var(--accent);height:34px} select{width:100%;background:#0d0d14;color:var(--text);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:13px;font-size:1rem}
-    .controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{appearance:none;border:0;border-radius:16px;padding:15px 16px;font-size:1rem;font-weight:850;color:white;background:linear-gradient(135deg,var(--accent),#6d28d9);cursor:pointer;min-height:52px}.btn.secondary{background:#20202b}.btn.export{background:linear-gradient(135deg,#0ea5e9,#14b8a6)}.btn:disabled{opacity:.42;cursor:not-allowed}
-    .meter{height:12px;border-radius:999px;background:#07070b;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.meter>div{height:100%;width:0;background:linear-gradient(90deg,var(--ok),#facc15,var(--danger));transition:width .08s linear}
-    audio{width:100%;margin-top:12px}.status{min-height:24px;color:var(--muted);font-weight:700}.tag{display:inline-flex;padding:7px 10px;border-radius:999px;background:rgba(139,92,246,.15);color:#c4b5fd;font-size:.78rem;font-weight:850;margin-right:6px;margin-bottom:6px}
-    details{color:var(--muted)}summary{color:var(--text);font-weight:800;cursor:pointer}.footer{font-size:.75rem;color:#76768a;text-align:center;padding-top:6px}
-    .analysis-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.stat{padding:12px;border-radius:16px;background:#0d0d14;border:1px solid rgba(255,255,255,.08)}.stat b{display:block;font-size:1.15rem;margin-top:3px}.wave{width:100%;height:150px;background:#09090e;border-radius:18px;border:1px solid rgba(255,255,255,.08);touch-action:none}.pill-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.mini{font-size:.76rem;padding:7px 9px;border-radius:999px;background:#20202b;color:#d6d6e5}.warn{color:#facc15}.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}.toggle{display:flex;justify-content:space-between;align-items:center;padding:11px 0}.toggle input{width:22px;height:22px}.section-title{margin:0 0 4px;font-size:1.08rem}.markers{font-size:.78rem;color:var(--muted);line-height:1.6}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b10">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Suno Master Fixer v2</title>
+<style>
+:root{color-scheme:dark;--bg:#08080c;--card:#15151d;--muted:#9b9bad;--text:#f7f7fb;--accent:#8b5cf6;--accent2:#22d3ee;--ok:#34d399}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 0,#271747 0,transparent 34%),radial-gradient(circle at 100% 30%,#073c47 0,transparent 30%),var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",Segoe UI,sans-serif;min-height:100vh}
+main{width:min(780px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 16px calc(30px + env(safe-area-inset-bottom))}
+h1{font-size:clamp(2.2rem,9vw,4rem);line-height:.92;letter-spacing:-.06em;margin:8px 0}.sub,.tiny{color:var(--muted)}.sub{line-height:1.45}
+.card{margin:14px 0;padding:17px;border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.09);box-shadow:0 20px 70px rgba(0,0,0,.3)}
+.tag{display:inline-flex;margin:0 6px 6px 0;padding:7px 10px;border-radius:999px;background:rgba(139,92,246,.16);color:#c4b5fd;font-size:.78rem;font-weight:800}
+.drop{display:block;padding:24px;text-align:center;border:1.5px dashed rgba(255,255,255,.25);border-radius:20px;cursor:pointer;background:rgba(255,255,255,.025)}input[type=file]{display:none}
+audio{width:100%;margin-top:12px}.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-top:16px}.name{font-weight:800}.freq{display:block;font-size:.78rem;color:var(--muted);margin-top:3px}.value{font-weight:900;color:var(--accent2);font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;height:36px;accent-color:var(--accent)}select{width:100%;padding:13px;border-radius:14px;background:#0d0d14;color:var(--text);border:1px solid rgba(255,255,255,.14);font-size:1rem}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:16px;min-height:52px;padding:14px;font-size:1rem;font-weight:900;color:#fff;background:linear-gradient(135deg,var(--accent),#6d28d9)}.btn.secondary{background:#23232e}.btn.export{width:100%;margin-top:12px;background:linear-gradient(135deg,#0ea5e9,#14b8a6)}.btn:disabled{opacity:.4}
+.wave{width:100%;height:145px;background:#09090e;border-radius:17px;border:1px solid rgba(255,255,255,.08)}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.stat{padding:11px;border-radius:15px;background:#0d0d14}.stat b{display:block;font-size:1.1rem;margin-top:3px}
+.meter{height:12px;border-radius:99px;background:#07070b;overflow:hidden}.meter div{height:100%;width:0;background:linear-gradient(90deg,var(--ok),#facc15,#fb7185)}.status{min-height:24px;color:var(--muted);font-weight:700;margin-top:10px}.live{color:var(--ok);font-weight:900}
+details{margin-top:14px;color:var(--muted)}summary{color:var(--text);font-weight:850}.footer{text-align:center;color:#747487;font-size:.75rem;margin-top:10px}
+</style>
 </head>
 <body>
 <main>
-  <span class="tag">iPhone-ready</span><span class="tag">Private processing</span><span class="tag">WAV export</span>
-  <h1>Suno Master Fixer</h1>
-  <p class="sub">Clean harsh AI artifacts, tighten the low end, add clarity, control peaks, and export a fresh 24-bit WAV directly on your phone.</p>
+<span class="tag">iPhone-ready</span><span class="tag">Live EQ</span><span class="tag">24-bit WAV</span>
+<h1>Suno Master Fixer</h1>
+<p class="sub">Play your track and hear EQ, dynamics, tempo, width, and output changes instantly. Every EQ band shows the exact frequency range it targets.</p>
 
-  <section class="card">
-    <label class="drop" for="fileInput">
-      <strong>Tap to choose your Suno track</strong>
-      <div class="tiny">MP3, M4A, WAV, AIFF, or anything Safari can decode</div>
-      <div id="fileName" class="file-name"></div>
-    </label>
-    <input id="fileInput" type="file" accept="audio/*,.wav,.aif,.aiff,.m4a,.mp3" />
-    <audio id="originalPlayer" controls hidden></audio>
-  </section>
+<section class="card">
+<label class="drop" for="fileInput"><strong>Tap to choose your track</strong><div class="tiny">MP3, M4A, WAV, AIFF, or another Safari-decodable format</div><div id="fileName"></div></label>
+<input id="fileInput" type="file" accept="audio/*,.wav,.aif,.aiff,.m4a,.mp3">
+<audio id="player" controls hidden></audio>
+<p id="liveNote" class="tiny" hidden><span class="live">LIVE</span> — changes are applied while the song plays.</p>
+</section>
 
-  <section class="card">
-    <h2 class="section-title">Smart song analysis</h2>
-    <p class="tiny">Detects transients, tempo, likely meter, vocal activity, sections, dynamics, and tonal balance on-device.</p>
-    <canvas id="waveform" class="wave" width="700" height="150"></canvas>
-    <div class="analysis-grid">
-      <div class="stat"><span class="tiny">Tempo</span><b id="bpmStat">— BPM</b></div>
-      <div class="stat"><span class="tiny">Time signature</span><b id="meterStat">—</b></div>
-      <div class="stat"><span class="tiny">Transients</span><b id="transientStat">—</b></div>
-      <div class="stat"><span class="tiny">Vocal / lyric activity</span><b id="vocalStat">—</b></div>
-    </div>
-    <div class="pill-row" id="analysisTags"></div>
-    <p id="sectionMarkers" class="markers"></p>
-    <button id="analyzeBtn" class="btn secondary" style="width:100%;margin-top:10px" disabled>Analyze Track</button>
-  </section>
+<section class="card">
+<h2>Smart analysis</h2>
+<canvas id="wave" class="wave" width="720" height="145"></canvas>
+<div class="grid">
+<div class="stat"><span class="tiny">Tempo</span><b id="bpm">— BPM</b></div>
+<div class="stat"><span class="tiny">Likely meter</span><b id="meter">—</b></div>
+<div class="stat"><span class="tiny">Transients</span><b id="transients">—</b></div>
+<div class="stat"><span class="tiny">Vocal activity</span><b id="vocals">—</b></div>
+</div>
+<button id="analyze" class="btn secondary" style="width:100%;margin-top:10px" disabled>Analyze Track</button>
+</section>
 
-  <section class="card">
-    <h2 class="section-title">Auto Enhance</h2>
-    <div class="row"><label for="enhance">One-knob enhancement</label><span id="enhanceVal" class="value">50%</span></div>
-    <input id="enhance" type="range" min="0" max="100" value="50" />
-    <div class="toggle"><label for="autoProfile"><strong>Use detected song profile</strong><div class="tiny">Adapts cleanup, punch, width, and tone</div></label><input id="autoProfile" type="checkbox" checked></div>
-  </section>
+<section class="card">
+<h2>Mastering EQ</h2>
+<label><strong>Preset</strong></label>
+<select id="preset">
+<option value="balanced">Balanced Clean Master</option>
+<option value="crisp">Crisp + Razor Transients</option>
+<option value="warm">Warm + Smooth</option>
+<option value="loud">Loud but Controlled</option>
+<option value="vocal">Vocal Clarity</option>
+</select>
 
-  <section class="card">
-    <label for="preset"><strong>Mastering preset</strong></label>
-    <select id="preset">
-      <option value="balanced">Balanced Clean Master</option>
-      <option value="crisp">Crisp + Razor Transients</option>
-      <option value="warm">Warm + Smooth</option>
-      <option value="loud">Loud but Controlled</option>
-      <option value="vocal">Vocal Clarity</option>
-    </select>
+<div id="bands"></div>
 
-    <div class="row"><label for="clean">Artifact cleanup</label><span id="cleanVal" class="value">55%</span></div>
-    <input id="clean" type="range" min="0" max="100" value="55" />
+<div class="row"><label><span class="name">Punch / Compression</span><span class="freq">Controls attack and dynamic impact</span></label><span id="punchVal" class="value">+1.5 dB</span></div>
+<input id="punch" type="range" min="-6" max="9" step=".1" value="1.5">
 
-    <div class="row"><label for="clarity">Clarity</label><span id="clarityVal" class="value">45%</span></div>
-    <input id="clarity" type="range" min="0" max="100" value="45" />
+<div class="row"><label><span class="name">Output Gain</span><span class="freq">Final level after processing</span></label><span id="outputVal" class="value">0.0 dB</span></div>
+<input id="output" type="range" min="-24" max="12" step=".1" value="0">
 
-    <div class="row"><label for="bass">Low-end control</label><span id="bassVal" class="value">60%</span></div>
-    <input id="bass" type="range" min="0" max="100" value="60" />
+<details><summary>Mini DAW controls</summary>
+<div class="row"><label><span class="name">Tempo</span><span class="freq">Playback and rendered tempo adjustment</span></label><span id="tempoVal" class="value">0.0%</span></div>
+<input id="tempo" type="range" min="-8" max="8" step=".5" value="0">
+<div class="row"><label><span class="name">Stereo Width</span><span class="freq">Mid/side width control</span></label><span id="widthVal" class="value">100%</span></div>
+<input id="width" type="range" min="0" max="150" step="1" value="100">
+</details>
+</section>
 
-    <div class="row"><label for="punch">Punch</label><span id="punchVal" class="value">50%</span></div>
-    <input id="punch" type="range" min="0" max="100" value="50" />
-
-    <div class="row"><label for="loudness">Output loudness</label><span id="loudnessVal" class="value">-10 LUFS-ish</span></div>
-    <input id="loudness" type="range" min="-14" max="-7" step="1" value="-10" />
-
-    <details style="margin-top:10px"><summary>Mini DAW controls</summary>
-      <div class="row"><label for="tempoAdjust">Tempo adjustment</label><span id="tempoAdjustVal" class="value">0%</span></div>
-      <input id="tempoAdjust" type="range" min="-8" max="8" step="0.5" value="0" />
-      <div class="row"><label for="transient">Transient shaping</label><span id="transientVal" class="value">0%</span></div>
-      <input id="transient" type="range" min="-50" max="50" value="0" />
-      <div class="row"><label for="stereo">Stereo width</label><span id="stereoVal" class="value">100%</span></div>
-      <input id="stereo" type="range" min="0" max="150" value="100" />
-      <div class="row"><label for="deess">De-ess / harsh vocal control</label><span id="deessVal" class="value">35%</span></div>
-      <input id="deess" type="range" min="0" max="100" value="35" />
-      <div class="toggle"><label for="preservePitch"><strong>Preserve pitch during tempo change</strong></label><input id="preservePitch" type="checkbox" checked></div>
-    </details>
-  </section>
-
-  <section class="card">
-    <div class="controls">
-      <button id="processBtn" class="btn" disabled>Fix + Master</button>
-      <button id="resetBtn" class="btn secondary">Reset</button>
-    </div>
-    <div id="status" class="status" aria-live="polite"></div>
-    <div class="meter"><div id="meterFill"></div></div>
-    <audio id="processedPlayer" controls hidden></audio>
-    <button id="downloadBtn" class="btn export" style="width:100%;margin-top:12px" disabled>Export 24-bit WAV</button>
-  </section>
-
-  <section class="card">
-    <details>
-      <summary>What the app actually does</summary>
-      <p>It uses on-device rhythm and energy analysis, transient mapping, likely tempo and meter estimation, vocal-activity detection, adaptive EQ, cleanup, compression, transient shaping, stereo width, soft saturation, limiting, tempo adjustment, and 24-bit WAV encoding. Apple Intelligence itself is only available to native Swift apps, so this web version uses private browser-side DSP and analysis.</p>
-    </details>
-  </section>
-  <div class="footer">Best results: start with the highest-quality Suno WAV available. Keep your phone awake while rendering long tracks.</div>
+<section class="card">
+<div class="controls"><button id="render" class="btn" disabled>Render Master</button><button id="reset" class="btn secondary">Reset</button></div>
+<div id="status" class="status"></div><div class="meter"><div id="meterFill"></div></div>
+<audio id="processed" controls hidden></audio>
+<button id="download" class="btn export" disabled>Export 24-bit WAV</button>
+</section>
+<div class="footer">All audio processing stays on your device.</div>
 </main>
+
 <script>
-const $ = (id) => document.getElementById(id);
-const fileInput = $('fileInput'), processBtn = $('processBtn'), downloadBtn = $('downloadBtn');
-const statusEl = $('status'), meterFill = $('meterFill');
-let sourceBuffer = null, originalURL = null, processedBlob = null, processedURL = null, analysisData=null;
-
-const ranges = ['clean','clarity','bass','punch','enhance'];
-ranges.forEach(id => $(id).addEventListener('input', () => $(id+'Val').textContent = $(id).value+'%'));
-$('loudness').addEventListener('input', () => $('loudnessVal').textContent = $('loudness').value+' LUFS-ish');
-['tempoAdjust','transient','stereo','deess'].forEach(id=>$(id).addEventListener('input',()=>$(id+'Val').textContent=$(id).value+'%'));
-
-const presets = {
-  balanced:{clean:55,clarity:45,bass:60,punch:50,loudness:-10},
-  crisp:{clean:62,clarity:72,bass:58,punch:72,loudness:-9},
-  warm:{clean:45,clarity:30,bass:65,punch:42,loudness:-11},
-  loud:{clean:55,clarity:52,bass:72,punch:65,loudness:-8},
-  vocal:{clean:70,clarity:68,bass:48,punch:45,loudness:-10}
+const $=id=>document.getElementById(id);
+const bandDefs=[
+{id:'sub',name:'Sub',freq:'20–60 Hz',type:'lowshelf',hz:55,min:-12,max:12,val:0},
+{id:'bass',name:'Bass / Kick Weight',freq:'60–150 Hz',type:'peaking',hz:95,min:-12,max:12,val:1},
+{id:'lowmid',name:'Low Mids / Mud',freq:'150–600 Hz',type:'peaking',hz:320,min:-12,max:9,val:-2},
+{id:'mid',name:'Mids / Boxiness',freq:'600 Hz–2 kHz',type:'peaking',hz:900,min:-12,max:9,val:-1},
+{id:'presence',name:'Presence / Vocal Clarity',freq:'2–6 kHz',type:'peaking',hz:3200,min:-9,max:12,val:1.5},
+{id:'harsh',name:'Harshness / De-ess',freq:'4–9 kHz',type:'peaking',hz:6500,min:-12,max:0,val:-2},
+{id:'air',name:'Air / Brilliance',freq:'9–20 kHz',type:'highshelf',hz:11000,min:-9,max:12,val:1}
+];
+const bands=$('bands');
+for(const b of bandDefs){
+ bands.insertAdjacentHTML('beforeend',`<div class="row"><label><span class="name">${b.name}</span><span class="freq">${b.freq} · center ${b.hz>=1000?(b.hz/1000)+' kHz':b.hz+' Hz'}</span></label><span id="${b.id}Val" class="value">${fmt(b.val)}</span></div><input id="${b.id}" type="range" min="${b.min}" max="${b.max}" step=".1" value="${b.val}">`);
+}
+function fmt(v){v=Number(v);return`${v>=0?'+':''}${v.toFixed(1)} dB`}
+let buffer=null,fileURL=null,outURL=null,outBlob=null,ctx=null,media=null,nodes={},raf=null;
+[...bandDefs.map(x=>x.id),'punch','output'].forEach(id=>$(id).addEventListener('input',()=>{$(id+'Val').textContent=fmt($(id).value);updateLive()}));
+$('tempo').addEventListener('input',()=>{$('tempoVal').textContent=Number($('tempo').value).toFixed(1)+'%';$('player').playbackRate=1+Number($('tempo').value)/100});
+$('width').addEventListener('input',()=>$('widthVal').textContent=$('width').value+'%');
+const presets={
+balanced:{sub:0,bass:1,lowmid:-2,mid:-1,presence:1.5,harsh:-2,air:1,punch:1.5,output:0},
+crisp:{sub:-.5,bass:.5,lowmid:-2.5,mid:-1,presence:3.5,harsh:-2.5,air:3,punch:3,output:-.5},
+warm:{sub:1.5,bass:2.5,lowmid:-1,mid:.5,presence:0,harsh:-1.5,air:-.5,punch:.5,output:0},
+loud:{sub:1,bass:2,lowmid:-2.5,mid:-1,presence:2,harsh:-2,air:1.5,punch:4,output:1},
+vocal:{sub:-1,bass:-1,lowmid:-3,mid:-1.5,presence:4,harsh:-4,air:2,punch:1,output:0}
 };
-$('preset').addEventListener('change', e => {
-  const p=presets[e.target.value]; Object.entries(p).forEach(([k,v])=>{$(k).value=v;$(k).dispatchEvent(new Event('input'));});
+$('preset').addEventListener('change',e=>Object.entries(presets[e.target.value]).forEach(([k,v])=>{$(k).value=v;$(k).dispatchEvent(new Event('input'))}));
+$('fileInput').addEventListener('change',async e=>{
+ const f=e.target.files[0];if(!f)return;
+ if(fileURL)URL.revokeObjectURL(fileURL);fileURL=URL.createObjectURL(f);$('fileName').textContent=f.name;$('player').src=fileURL;$('player').hidden=false;$('liveNote').hidden=false;
+ setStatus('Decoding audio…',15);
+ try{const temp=new (window.AudioContext||window.webkitAudioContext)();buffer=await temp.decodeAudioData(await f.arrayBuffer());await temp.close();await setupLive();drawWave(buffer);$('render').disabled=false;$('analyze').disabled=false;setStatus('Ready. Press play and move the EQ sliders.',0)}
+ catch(err){console.error(err);setStatus('Could not decode this file. Try WAV or M4A.',0)}
 });
-
-fileInput.addEventListener('change', async () => {
-  const file = fileInput.files[0]; if(!file) return;
-  cleanupUrls(); processedBlob=null; downloadBtn.disabled=true; $('processedPlayer').hidden=true;
-  $('fileName').textContent = file.name;
-  originalURL = URL.createObjectURL(file); $('originalPlayer').src=originalURL; $('originalPlayer').hidden=false;
-  setStatus('Decoding audio…',15);
-  try{
-    const ab=await file.arrayBuffer();
-    const ctx=new (window.AudioContext||window.webkitAudioContext)();
-    sourceBuffer=await ctx.decodeAudioData(ab.slice(0)); await ctx.close();
-    processBtn.disabled=false; $('analyzeBtn').disabled=false; drawWaveform(sourceBuffer);
-    setStatus(`Ready — ${formatTime(sourceBuffer.duration)}, ${sourceBuffer.sampleRate/1000} kHz`,0);
-  }catch(err){ sourceBuffer=null; processBtn.disabled=true; setStatus('Could not decode this file. Try a WAV or M4A export.',0); console.error(err); }
-});
-
-$('analyzeBtn').addEventListener('click', async()=>{
-  if(!sourceBuffer)return; $('analyzeBtn').disabled=true; setStatus('Analyzing rhythm, vocals, and dynamics…',18);
-  await new Promise(r=>setTimeout(r,30));
-  analysisData=analyzeAudio(sourceBuffer); renderAnalysis(analysisData); setStatus('Analysis complete.',0); $('analyzeBtn').disabled=false;
-});
-
-processBtn.addEventListener('click', async () => {
-  if(!sourceBuffer) return;
-  processBtn.disabled=true; downloadBtn.disabled=true; setStatus('Cleaning and mastering…',20);
-  try{
-    if(!analysisData && $('autoProfile').checked) analysisData=analyzeAudio(sourceBuffer);
-    const sr=Math.min(48000, sourceBuffer.sampleRate || 48000);
-    const tempoRatio=1+(+$('tempoAdjust').value/100);
-    const outDuration=sourceBuffer.duration/tempoRatio;
-    const offline=new OfflineAudioContext(2, Math.ceil(outDuration*sr), sr);
-    const renderedSource=offline.createBuffer(2, Math.ceil(sourceBuffer.duration*sr), sr);
-    for(let ch=0;ch<2;ch++){
-      const src=sourceBuffer.getChannelData(Math.min(ch,sourceBuffer.numberOfChannels-1));
-      const dst=renderedSource.getChannelData(ch);
-      if(sourceBuffer.sampleRate===sr){dst.set(src.subarray(0,dst.length));}
-      else { for(let i=0;i<dst.length;i++){const pos=i*sourceBuffer.sampleRate/sr, a=Math.floor(pos), b=Math.min(a+1,src.length-1), t=pos-a;dst[i]=(src[a]||0)*(1-t)+(src[b]||0)*t;} }
-    }
-    const s=offline.createBufferSource(); s.buffer=renderedSource; s.playbackRate.value=tempoRatio; if('preservesPitch' in s) s.preservesPitch=$('preservePitch').checked;
-    const enhance=+$('enhance').value/100;
-    let clean=+$('clean').value/100, clarity=+$('clarity').value/100, bass=+$('bass').value/100, punch=+$('punch').value/100;
-    if($('autoProfile').checked && analysisData){clean=Math.min(1,clean*.65+analysisData.noise*.35+enhance*.15);clarity=Math.min(1,clarity*.7+(1-analysisData.brightness)*.25+enhance*.2);punch=Math.min(1,punch*.7+analysisData.transientDensity*.3+enhance*.2);bass=Math.min(1,bass*.75+(1-analysisData.lowBalance)*.22+enhance*.12);} 
-    const transient=+$('transient').value/100, width=+$('stereo').value/100, deess=+$('deess').value/100;
-
-    const hp=biquad(offline,'highpass',24+clean*16,0,0.7);
-    const rumble=biquad(offline,'lowshelf',80,-1.5-clean*1.5,0.8);
-    const mud=biquad(offline,'peaking',300,-1-clean*3.3,1.0);
-    const box=biquad(offline,'peaking',650,-clean*1.6,1.2);
-    const harsh=biquad(offline,'peaking',3600,-clean*3.2-deess*2.4,1.4);
-    const presence=biquad(offline,'peaking',2200,clarity*2.5,0.9);
-    const air=biquad(offline,'highshelf',9000,clarity*3.8,0.75);
-    const lowPunch=biquad(offline,'peaking',95,(bass-.5)*3.2,0.85);
-
-    const comp=offline.createDynamicsCompressor();
-    comp.threshold.value=-18-punch*8; comp.knee.value=18; comp.ratio.value=2.2+punch*1.8; comp.attack.value=Math.max(.002,.012-punch*.006-transient*.006); comp.release.value=.16-transient*.04;
-    const sat=offline.createWaveShaper(); sat.curve=makeSoftClipCurve(1.2+punch*1.3); sat.oversample='4x';
-    const makeup=offline.createGain(); makeup.gain.value=1.05+punch*.18;
-    const limiter=offline.createDynamicsCompressor(); limiter.threshold.value=-2.0; limiter.knee.value=0; limiter.ratio.value=20; limiter.attack.value=.001; limiter.release.value=.07;
-    const splitter=offline.createChannelSplitter(2), merger=offline.createChannelMerger(2), lGain=offline.createGain(), rGain=offline.createGain();
-    lGain.gain.value=1; rGain.gain.value=1; // width is applied later in the rendered buffer for Safari reliability
-    s.connect(hp); hp.connect(rumble); rumble.connect(lowPunch); lowPunch.connect(mud); mud.connect(box); box.connect(harsh); harsh.connect(presence); presence.connect(air); air.connect(comp); comp.connect(sat); sat.connect(makeup); makeup.connect(limiter); limiter.connect(offline.destination);
-    s.start();
-    const progress=fakeProgress();
-    const rendered=await offline.startRendering(); clearInterval(progress); setStatus('Final peak control and WAV encoding…',88);
-    applyStereoWidth(rendered,width); applyFinalGain(rendered, +$('loudness').value);
-    processedBlob=encodeWav24(rendered);
-    if(processedURL) URL.revokeObjectURL(processedURL); processedURL=URL.createObjectURL(processedBlob);
-    $('processedPlayer').src=processedURL; $('processedPlayer').hidden=false; downloadBtn.disabled=false;
-    setStatus('Done. Clean, controlled, and ready to export.',100);
-  }catch(err){console.error(err);setStatus('Processing failed. Close other apps and try again with a shorter file.',0);} finally{processBtn.disabled=false;}
-});
-
-downloadBtn.addEventListener('click',()=>{
-  if(!processedBlob) return; const a=document.createElement('a'); a.href=processedURL;
-  const base=(fileInput.files[0]?.name||'suno-track').replace(/\.[^.]+$/,''); a.download=base+' - Fixed Master 24bit.wav'; document.body.appendChild(a); a.click(); a.remove();
-});
-$('resetBtn').addEventListener('click',()=>location.reload());
-
-
-function drawWaveform(buffer){const c=$('waveform'),x=c.getContext('2d'),w=c.width,h=c.height;x.clearRect(0,0,w,h);x.fillStyle='#09090e';x.fillRect(0,0,w,h);const d=buffer.getChannelData(0),step=Math.max(1,Math.floor(d.length/w));x.strokeStyle='#8b5cf6';x.lineWidth=1.5;x.beginPath();for(let i=0;i<w;i++){let mn=1,mx=-1;for(let j=0;j<step;j++){const v=d[i*step+j]||0;mn=Math.min(mn,v);mx=Math.max(mx,v)}x.moveTo(i,(1+mn)*h/2);x.lineTo(i,(1+mx)*h/2)}x.stroke();}
-function analyzeAudio(buffer){const sr=buffer.sampleRate,d=buffer.getChannelData(0),hop=Math.max(256,Math.floor(sr*.01)),env=[];let rmsSum=0,zcr=0,low=0,high=0;for(let i=0;i<d.length-hop;i+=hop){let e=0,zc=0,lp=0,hp=0,prev=d[i];for(let j=0;j<hop;j++){const v=d[i+j];e+=v*v;if((v>=0)!=(prev>=0))zc++;lp+=Math.abs((v+(d[i+j-1]||v))*.5);hp+=Math.abs(v-(d[i+j-1]||v));prev=v}env.push(Math.sqrt(e/hop));rmsSum+=e;zcr+=zc;low+=lp;high+=hp}const mean=env.reduce((a,b)=>a+b,0)/env.length;const flux=env.map((v,i)=>Math.max(0,v-(env[i-1]||v)));const th=flux.reduce((a,b)=>a+b,0)/flux.length*2.2;const peaks=[];for(let i=1;i<flux.length-1;i++)if(flux[i]>th&&flux[i]>flux[i-1]&&flux[i]>=flux[i+1])peaks.push(i*hop/sr);const hist=new Map();for(let i=1;i<peaks.length;i++){let bpm=60/(peaks[i]-peaks[i-1]);while(bpm<70)bpm*=2;while(bpm>180)bpm/=2;const k=Math.round(bpm);hist.set(k,(hist.get(k)||0)+1)}let bpm=120,best=0;for(const[k,v]of hist)if(v>best){best=v;bpm=k}const beat=60/bpm;let score3=0,score4=0;peaks.forEach((t,i)=>{if(i%3===0)score3+=env[Math.min(env.length-1,Math.floor(t*sr/hop))]||0;if(i%4===0)score4+=env[Math.min(env.length-1,Math.floor(t*sr/hop))]||0});const meter=score3>score4*1.12?'3/4 or 6/8':'4/4';const duration=buffer.duration;const vocalFrames=env.filter((v,i)=>v>mean*.7 && ((i%7)/7)<.8).length;const vocal=vocalFrames/env.length;const sections=[];for(let t=0;t<duration;t+=Math.max(12,duration/6))sections.push(formatTime(t));return{bpm,meter,transients:peaks.length,transientDensity:Math.min(1,peaks.length/(duration*3)),vocal,brightness:Math.min(1,(high/(low+1e-9))*.7),lowBalance:Math.min(1,low/(high+low+1e-9)),noise:Math.min(1,zcr/(d.length)*8),rms:Math.sqrt(rmsSum/d.length),sections};}
-function renderAnalysis(a){$('bpmStat').textContent=a.bpm+' BPM';$('meterStat').textContent=a.meter;$('transientStat').textContent=a.transients;$('vocalStat').textContent=Math.round(a.vocal*100)+'%';$('analysisTags').innerHTML=[a.brightness>.55?'Bright':'Warm',a.transientDensity>.55?'Punchy':'Smooth',a.noise>.35?'Needs cleanup':'Clean source',a.vocal>.4?'Vocal-forward':'Instrumental-heavy'].map(t=>`<span class="mini">${t}</span>`).join('');$('sectionMarkers').textContent='Likely section changes: '+a.sections.join(' • ');}
-function applyStereoWidth(buffer,width){if(buffer.numberOfChannels<2)return;const L=buffer.getChannelData(0),R=buffer.getChannelData(1);for(let i=0;i<L.length;i++){const m=(L[i]+R[i])*.5,s=(L[i]-R[i])*.5*width;L[i]=m+s;R[i]=m-s;}}
-function biquad(ctx,type,freq,gain=0,q=.7){const n=ctx.createBiquadFilter();n.type=type;n.frequency.value=freq;n.gain.value=gain;n.Q.value=q;return n}
-function makeSoftClipCurve(amount){const n=65536,c=new Float32Array(n);for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=Math.tanh(amount*x)/Math.tanh(amount)}return c}
-function applyFinalGain(buffer,target){let peak=0;for(let c=0;c<buffer.numberOfChannels;c++){const d=buffer.getChannelData(c);for(let i=0;i<d.length;i++)peak=Math.max(peak,Math.abs(d[i]));}
-  const targetPeak=Math.pow(10,-1/20); let gain=peak?targetPeak/peak:1; const lufsMakeup=Math.pow(10,((-9-target)*0.12)/20); gain=Math.min(gain*lufsMakeup,2.2);
-  for(let c=0;c<buffer.numberOfChannels;c++){const d=buffer.getChannelData(c);let prev=0;for(let i=0;i<d.length;i++){let x=(d[i]-prev*.0005)*gain;prev=d[i];d[i]=Math.max(-.999,Math.min(.999,Math.tanh(x*1.015)/Math.tanh(1.015)));}}
+async function setupLive(){
+ if(ctx)return;
+ ctx=new (window.AudioContext||window.webkitAudioContext)();media=ctx.createMediaElementSource($('player'));let prev=media;
+ const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=24;prev.connect(hp);prev=hp;
+ for(const b of bandDefs){const n=ctx.createBiquadFilter();n.type=b.type;n.frequency.value=b.hz;n.Q.value=b.type==='peaking'?1:0.7;prev.connect(n);prev=n;nodes[b.id]=n}
+ const comp=ctx.createDynamicsCompressor();comp.knee.value=18;comp.attack.value=.008;comp.release.value=.14;prev.connect(comp);prev=comp;nodes.comp=comp;
+ const gain=ctx.createGain();prev.connect(gain);prev=gain;nodes.gain=gain;
+ const analyser=ctx.createAnalyser();analyser.fftSize=256;prev.connect(analyser);analyser.connect(ctx.destination);nodes.analyser=analyser;updateLive()
 }
-function encodeWav24(buffer){const channels=2,sr=buffer.sampleRate,frames=buffer.length,bps=3,block=channels*bps,size=44+frames*block;const ab=new ArrayBuffer(size),v=new DataView(ab);let o=0;
-  const str=s=>{for(let i=0;i<s.length;i++)v.setUint8(o++,s.charCodeAt(i))}; str('RIFF');v.setUint32(o,size-8,true);o+=4;str('WAVE');str('fmt ');v.setUint32(o,16,true);o+=4;v.setUint16(o,1,true);o+=2;v.setUint16(o,channels,true);o+=2;v.setUint32(o,sr,true);o+=4;v.setUint32(o,sr*block,true);o+=4;v.setUint16(o,block,true);o+=2;v.setUint16(o,24,true);o+=2;str('data');v.setUint32(o,frames*block,true);o+=4;
-  const L=buffer.getChannelData(0),R=buffer.getChannelData(Math.min(1,buffer.numberOfChannels-1));
-  for(let i=0;i<frames;i++){for(const x0 of [L[i],R[i]]){const x=Math.max(-1,Math.min(1,x0));let s=x<0?Math.round(x*8388608):Math.round(x*8388607);if(s<0)s+=16777216;v.setUint8(o++,s&255);v.setUint8(o++,(s>>8)&255);v.setUint8(o++,(s>>16)&255);}}
-  return new Blob([ab],{type:'audio/wav'});
-}
-function setStatus(t,p){statusEl.textContent=t;meterFill.style.width=p+'%'}
-function fakeProgress(){let p=22;return setInterval(()=>{p=Math.min(82,p+Math.random()*4);meterFill.style.width=p+'%'},350)}
-function formatTime(sec){const m=Math.floor(sec/60),s=Math.round(sec%60).toString().padStart(2,'0');return `${m}:${s}`}
-function cleanupUrls(){if(originalURL)URL.revokeObjectURL(originalURL);if(processedURL)URL.revokeObjectURL(processedURL)}
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+function updateLive(){if(!ctx)return;const t=ctx.currentTime;for(const b of bandDefs)nodes[b.id].gain.setTargetAtTime(Number($(b.id).value),t,.02);const p=Number($('punch').value);nodes.comp.threshold.setTargetAtTime(-18-p*1.2,t,.02);nodes.comp.ratio.setTargetAtTime(Math.max(1,2.2+p*.18),t,.02);nodes.gain.gain.setTargetAtTime(Math.pow(10,Number($('output').value)/20),t,.02)}
+$('player').addEventListener('play',async()=>{if(ctx?.state==='suspended')await ctx.resume();startMeter()});$('player').addEventListener('pause',stopMeter);$('player').addEventListener('ended',stopMeter);
+function startMeter(){stopMeter();const d=new Uint8Array(nodes.analyser.frequencyBinCount);const loop=()=>{nodes.analyser.getByteTimeDomainData(d);let p=0;for(const v of d)p=Math.max(p,Math.abs(v-128)/128);$('meterFill').style.width=Math.min(100,p*112)+'%';raf=requestAnimationFrame(loop)};loop()}function stopMeter(){if(raf)cancelAnimationFrame(raf);raf=null}
+$('analyze').addEventListener('click',()=>{if(!buffer)return;const a=analyze(buffer);$('bpm').textContent=a.bpm+' BPM';$('meter').textContent=a.meter;$('transients').textContent=a.transients;$('vocals').textContent=Math.round(a.vocal*100)+'%';setStatus('Analysis complete.',0)});
+function analyze(b){const d=b.getChannelData(0),sr=b.sampleRate,hop=Math.max(256,Math.floor(sr*.01)),env=[];for(let i=0;i<d.length-hop;i+=hop){let s=0;for(let j=0;j<hop;j++)s+=d[i+j]*d[i+j];env.push(Math.sqrt(s/hop))}const flux=env.map((v,i)=>Math.max(0,v-(env[i-1]||v))),th=flux.reduce((a,v)=>a+v,0)/flux.length*2.2,peaks=[];for(let i=1;i<flux.length-1;i++)if(flux[i]>th&&flux[i]>flux[i-1]&&flux[i]>=flux[i+1])peaks.push(i*hop/sr);const hist={};for(let i=1;i<peaks.length;i++){let bpm=60/(peaks[i]-peaks[i-1]);while(bpm<70)bpm*=2;while(bpm>180)bpm/=2;bpm=Math.round(bpm);hist[bpm]=(hist[bpm]||0)+1}let bpm=120,best=0;for(const k in hist)if(hist[k]>best){best=hist[k];bpm=k}const mean=env.reduce((a,v)=>a+v,0)/env.length;return{bpm,meter:'4/4 or compound meter',transients:peaks.length,vocal:env.filter(v=>v>mean*.72).length/env.length}}
+$('render').addEventListener('click',async()=>{if(!buffer)return;$('render').disabled=true;$('download').disabled=true;setStatus('Rendering master…',20);try{
+ const rate=1+Number($('tempo').value)/100,sr=Math.min(48000,buffer.sampleRate),off=new OfflineAudioContext(2,Math.ceil(buffer.duration/rate*sr),sr),src=off.createBufferSource();src.buffer=buffer;src.playbackRate.value=rate;let prev=src;
+ const hp=off.createBiquadFilter();hp.type='highpass';hp.frequency.value=24;prev.connect(hp);prev=hp;
+ for(const b of bandDefs){const n=off.createBiquadFilter();n.type=b.type;n.frequency.value=b.hz;n.Q.value=b.type==='peaking'?1:.7;n.gain.value=Number($(b.id).value);prev.connect(n);prev=n}
+ const comp=off.createDynamicsCompressor(),p=Number($('punch').value);comp.threshold.value=-18-p*1.2;comp.knee.value=18;comp.ratio.value=Math.max(1,2.2+p*.18);comp.attack.value=.008;comp.release.value=.14;prev.connect(comp);prev=comp;
+ const gain=off.createGain();gain.gain.value=Math.pow(10,Number($('output').value)/20);prev.connect(gain);gain.connect(off.destination);src.start();
+ const rendered=await off.startRendering();applyWidth(rendered,Number($('width').value)/100);outBlob=wav24(rendered);if(outURL)URL.revokeObjectURL(outURL);outURL=URL.createObjectURL(outBlob);$('processed').src=outURL;$('processed').hidden=false;$('download').disabled=false;setStatus('Done. Your master is ready.',100)
+ }catch(err){console.error(err);setStatus('Rendering failed. Close other apps and retry.',0)}finally{$('render').disabled=false}});
+$('download').addEventListener('click',()=>{const a=document.createElement('a');a.href=outURL;a.download=($('fileInput').files[0]?.name||'track').replace(/\.[^.]+$/,'')+' - Fixed Master 24bit.wav';a.click()});
+$('reset').addEventListener('click',()=>location.reload());
+function drawWave(b){const c=$('wave'),x=c.getContext('2d'),w=c.width,h=c.height,d=b.getChannelData(0),step=Math.max(1,Math.floor(d.length/w));x.fillStyle='#09090e';x.fillRect(0,0,w,h);x.strokeStyle='#8b5cf6';x.beginPath();for(let i=0;i<w;i++){let mn=1,mx=-1;for(let j=0;j<step;j++){const v=d[i*step+j]||0;mn=Math.min(mn,v);mx=Math.max(mx,v)}x.moveTo(i,(1+mn)*h/2);x.lineTo(i,(1+mx)*h/2)}x.stroke()}
+function applyWidth(b,w){if(b.numberOfChannels<2)return;const L=b.getChannelData(0),R=b.getChannelData(1);for(let i=0;i<L.length;i++){const m=(L[i]+R[i])*.5,s=(L[i]-R[i])*.5*w;L[i]=m+s;R[i]=m-s}}
+function wav24(b){const ch=2,sr=b.sampleRate,n=b.length,block=6,ab=new ArrayBuffer(44+n*block),v=new DataView(ab);let o=0;const str=s=>{for(const c of s)v.setUint8(o++,c.charCodeAt(0))};str('RIFF');v.setUint32(o,ab.byteLength-8,true);o+=4;str('WAVE');str('fmt ');v.setUint32(o,16,true);o+=4;v.setUint16(o,1,true);o+=2;v.setUint16(o,ch,true);o+=2;v.setUint32(o,sr,true);o+=4;v.setUint32(o,sr*block,true);o+=4;v.setUint16(o,block,true);o+=2;v.setUint16(o,24,true);o+=2;str('data');v.setUint32(o,n*block,true);o+=4;const L=b.getChannelData(0),R=b.getChannelData(Math.min(1,b.numberOfChannels-1));for(let i=0;i<n;i++)for(const z of[L[i],R[i]]){const x=Math.max(-1,Math.min(1,z));let s=x<0?Math.round(x*8388608):Math.round(x*8388607);if(s<0)s+=16777216;v.setUint8(o++,s&255);v.setUint8(o++,(s>>8)&255);v.setUint8(o++,(s>>16)&255)}return new Blob([ab],{type:'audio/wav'})}
+function setStatus(t,p){$('status').textContent=t;$('meterFill').style.width=p+'%'}
+if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 </script>
 </body>
 </html>

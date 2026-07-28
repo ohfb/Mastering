@@ -1,9 +1,9 @@
 {
-  "name": "Suno Master Fixer",
-  "short_name": "Master Fix",
-  "start_url": "./",
+  "name": "Funk Bandit Cosmic Mastering",
+  "short_name": "Cosmic Master",
+  "start_url": "./?v=4",
   "display": "standalone",
-  "background_color": "#08080c",
-  "theme_color": "#0b0b10",
-  "description": "Live browser-based mastering with frequency-labeled EQ and 24-bit WAV export."
+  "background_color": "#05030d",
+  "theme_color": "#120724",
+  "description": "Realtime cosmic mastering with smart analysis, mid-side spatial processing, manual EQ, and 24-bit WAV export."
 }

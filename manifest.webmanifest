@@ -1,9 +1,9 @@
 {
-  "name": "Funk Bandit Cosmic Mastering",
-  "short_name": "Cosmic Master",
-  "start_url": "./?v=4",
+  "name": "Funk Bandit Studios",
+  "short_name": "Bandit Studios",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#05030d",
   "theme_color": "#120724",
-  "description": "Realtime cosmic mastering with smart analysis, mid-side spatial processing, manual EQ, and 24-bit WAV export."
+  "description": "Mastering, stems, prompts, visuals and music-video planning."
 }

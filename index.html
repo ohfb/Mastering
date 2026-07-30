@@ -5,307 +5,78 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#120724">
 <link rel="manifest" href="manifest.webmanifest">
-<title>Funk Bandit Cosmic Mastering</title>
+<title>Funk Bandit Studios</title>
 <style>
-:root{
-  color-scheme:dark;--bg:#05030d;--glass:rgba(17,10,38,.72);--line:rgba(184,151,255,.22);
-  --text:#fbf8ff;--muted:#aea4c7;--violet:#9d5cff;--cyan:#31dcff;--pink:#ff4fd8;
-  --green:#4dffc3;--gold:#ffd76a;
-}
-*{box-sizing:border-box}
-html{background:var(--bg)}
-body{
-  margin:0;min-height:100vh;overflow-x:hidden;color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Segoe UI,sans-serif;
-  background:
-    radial-gradient(circle at 12% 5%,rgba(143,70,255,.34),transparent 35%),
-    radial-gradient(circle at 88% 22%,rgba(29,205,255,.24),transparent 33%),
-    radial-gradient(circle at 45% 90%,rgba(255,49,190,.18),transparent 38%),#05030d;
-}
-body:before,body:after{
-  content:"";position:fixed;inset:-30%;pointer-events:none;z-index:-2;
-  background:
-    radial-gradient(circle,rgba(255,255,255,.85) 0 1px,transparent 1.5px) 0 0/95px 95px,
-    radial-gradient(circle,rgba(91,224,255,.7) 0 1px,transparent 1.5px) 40px 18px/145px 145px;
-  opacity:.45;animation:stars 55s linear infinite;
-}
-body:after{
-  inset:-15%;filter:blur(38px);opacity:.42;
-  background:conic-gradient(from 90deg at 50% 50%,rgba(117,61,255,.3),rgba(0,217,255,.2),rgba(255,54,194,.23),rgba(117,61,255,.3));
-  animation:nebula 22s ease-in-out infinite alternate;
-}
-@keyframes stars{to{transform:translate3d(-90px,120px,0)}}
-@keyframes nebula{to{transform:rotate(18deg) scale(1.12)}}
-@media(prefers-reduced-motion:reduce){body:before,body:after{animation:none}}
-main{width:min(840px,100%);margin:auto;padding:calc(20px + env(safe-area-inset-top)) 15px calc(32px + env(safe-area-inset-bottom))}
-.hero{padding:8px 4px 14px}
-.kicker{font-size:.77rem;letter-spacing:.18em;text-transform:uppercase;color:#86edff;font-weight:900}
-h1{font-size:clamp(2.4rem,10vw,4.8rem);line-height:.88;letter-spacing:-.065em;margin:10px 0 12px;
- background:linear-gradient(100deg,#fff 8%,#bd9aff 42%,#62eaff 70%,#ff7ce7);-webkit-background-clip:text;color:transparent}
-.sub{color:var(--muted);line-height:1.48;max-width:680px;margin:0}
-.card{
- margin:14px 0;padding:18px;border-radius:26px;background:linear-gradient(145deg,rgba(25,14,54,.83),rgba(8,8,24,.68));
- border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.06);
- backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)
-}
-.card h2{margin:0 0 12px;font-size:1.3rem}
-.badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
-.badge{padding:7px 10px;border-radius:999px;background:rgba(157,92,255,.15);border:1px solid rgba(185,145,255,.18);font-size:.73rem;font-weight:850;color:#d8c5ff}
-.drop{display:block;text-align:center;padding:27px 18px;border-radius:21px;border:1.5px dashed rgba(140,224,255,.36);background:rgba(49,220,255,.035);cursor:pointer}
-.drop strong{font-size:1.06rem}.tiny{font-size:.78rem;color:var(--muted);line-height:1.4}.fileName{margin-top:8px;color:#80eaff;font-weight:800;word-break:break-word}
-input[type=file]{display:none}
-.transport{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center;margin-top:14px}
-.play{
- width:68px;height:68px;border-radius:50%;border:1px solid rgba(255,255,255,.28);color:#fff;font-size:1.45rem;font-weight:900;
- background:radial-gradient(circle at 30% 25%,#d5b7ff,#8f50ff 48%,#3d1b8c);box-shadow:0 0 35px rgba(157,92,255,.5)
-}
-.play:disabled{opacity:.38;box-shadow:none}
-.track{min-width:0}.trackTop{display:flex;justify-content:space-between;gap:10px;font-variant-numeric:tabular-nums}
-.seek{width:100%;height:34px;accent-color:var(--cyan)}
-canvas{display:block;width:100%;height:150px;border-radius:18px;background:rgba(2,2,10,.68);border:1px solid rgba(255,255,255,.08)}
-.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.btn{border:0;border-radius:17px;min-height:53px;padding:13px 15px;color:#fff;font-size:.98rem;font-weight:900;background:linear-gradient(135deg,#9759ff,#5d2ac7)}
-.btn.secondary{background:rgba(255,255,255,.085);border:1px solid rgba(255,255,255,.1)}
-.btn.spatial{background:linear-gradient(135deg,#087ea4,#7d3cff 55%,#e337bf);position:relative;overflow:hidden}
-.btn.spatial.active{box-shadow:0 0 32px rgba(56,218,255,.43);outline:1px solid rgba(116,236,255,.72)}
-.btn:disabled{opacity:.38}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.stat{padding:13px;border-radius:16px;background:rgba(3,3,14,.54);border:1px solid rgba(255,255,255,.06)}
-.stat span{font-size:.75rem;color:var(--muted)}.stat b{display:block;margin-top:4px;font-size:1.12rem}
-.score{display:flex;align-items:center;gap:13px;margin:12px 0}
-.ring{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:1.25rem;font-weight:950;background:conic-gradient(var(--cyan) 0%,rgba(255,255,255,.08) 0)}
-.recs{display:grid;gap:8px}.rec{padding:11px 12px;border-radius:14px;background:rgba(77,255,195,.07);border:1px solid rgba(77,255,195,.15);color:#d8fff2}
-.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;margin-top:14px}
-.name{font-weight:850}.freq{display:block;font-size:.74rem;color:var(--muted);margin-top:3px}.value{font-weight:900;color:#6fe9ff;font-variant-numeric:tabular-nums}
-input[type=range]{width:100%;height:36px;accent-color:var(--violet)}
-select{width:100%;padding:13px;border-radius:14px;background:#0d0920;color:#fff;border:1px solid rgba(255,255,255,.15);font-size:1rem}
-details{margin-top:15px}summary{font-weight:900;cursor:pointer}
-.status{min-height:25px;color:var(--muted);font-weight:750;margin-top:11px}
-.meter{height:11px;border-radius:99px;background:#05030c;overflow:hidden}.meter>div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold),#ff5c85)}
-.footer{text-align:center;color:#81779b;font-size:.74rem;margin-top:12px}
-@media(max-width:520px){.actions{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}}
+:root{color-scheme:dark;--bg:#05030d;--glass:rgba(17,10,38,.78);--line:rgba(184,151,255,.22);--text:#fbf8ff;--muted:#aea4c7;--violet:#9d5cff;--cyan:#31dcff;--pink:#ff4fd8;--green:#4dffc3}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",Segoe UI,sans-serif;background:radial-gradient(circle at 12% 5%,rgba(143,70,255,.34),transparent 35%),radial-gradient(circle at 88% 22%,rgba(29,205,255,.24),transparent 33%),radial-gradient(circle at 45% 90%,rgba(255,49,190,.18),transparent 38%),var(--bg)}
+main{width:min(920px,100%);margin:auto;padding:24px 15px 48px}.hero{padding:10px 4px}.kicker{font-size:.77rem;letter-spacing:.18em;text-transform:uppercase;color:#86edff;font-weight:900}h1{font-size:clamp(2.6rem,10vw,5rem);line-height:.9;letter-spacing:-.06em;margin:10px 0;background:linear-gradient(100deg,#fff,#bd9aff,#62eaff,#ff7ce7);-webkit-background-clip:text;color:transparent}.sub,.tiny{color:var(--muted);line-height:1.5}.card{margin:14px 0;padding:18px;border-radius:26px;background:linear-gradient(145deg,rgba(25,14,54,.86),rgba(8,8,24,.72));border:1px solid var(--line);box-shadow:0 24px 80px rgba(0,0,0,.42)}h2{margin:0 0 12px}.tabs{display:flex;gap:8px;flex-wrap:wrap}.badge{padding:7px 10px;border-radius:999px;background:rgba(157,92,255,.15);border:1px solid rgba(185,145,255,.18);font-size:.73rem;font-weight:850;color:#d8c5ff}.drop{display:block;text-align:center;padding:24px;border-radius:20px;border:1.5px dashed rgba(140,224,255,.36);background:rgba(49,220,255,.035);cursor:pointer}input[type=file]{display:none}.fileName{margin-top:8px;color:#80eaff;font-weight:800;word-break:break-word}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.btn{border:0;border-radius:17px;min-height:52px;padding:13px 15px;color:#fff;font-size:.96rem;font-weight:900;background:linear-gradient(135deg,#9759ff,#5d2ac7)}.btn.secondary{background:rgba(255,255,255,.085);border:1px solid rgba(255,255,255,.1)}.btn.green{background:linear-gradient(135deg,#0ca5c2,#16a77b)}.btn:disabled{opacity:.4}.field{display:grid;gap:6px;margin:10px 0}.field label{font-weight:800}.field input,.field select,.field textarea{width:100%;padding:13px;border-radius:14px;background:#0d0920;color:#fff;border:1px solid rgba(255,255,255,.15);font-size:1rem}.field textarea{min-height:130px;resize:vertical}.status{min-height:24px;color:var(--muted);font-weight:750;margin-top:12px}.visual-card{min-height:260px;border-radius:22px;display:grid;place-items:center;text-align:center;padding:25px;overflow:hidden;background:radial-gradient(circle,#9d5cff44,transparent 35%),linear-gradient(135deg,#070414,#16103c);border:1px solid #ffffff18}.visual-card>*{display:block}.orb{width:120px;height:120px;border-radius:50%;background:conic-gradient(var(--cyan),var(--pink),var(--violet),var(--cyan));filter:blur(1px);box-shadow:0 0 55px #9d5cff88;margin-bottom:20px}.visual-card strong{font-size:1.7rem}.visual-card span{color:#cfc5e4;margin-top:8px}.visual-card small{color:#7eeaff;margin-top:10px}pre{white-space:pre-wrap;word-break:break-word;background:#05030d;padding:12px;border-radius:14px;color:#bcf8ff}.footer{text-align:center;color:#81779b;font-size:.76rem;margin-top:18px}
+@media(max-width:620px){.grid,.actions{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <main>
 <section class="hero">
- <div class="badges"><span class="badge">REALTIME</span><span class="badge">MID / SIDE</span><span class="badge">24-BIT WAV</span></div>
- <div class="kicker">Funk Bandit Audio Lab</div>
- <h1>Cosmic Mastering</h1>
- <p class="sub">Analyze, spatialize, fine-tune, and export your track. There is one playback control, and every mastering change is heard live.</p>
+<div class="tabs"><span class="badge">MASTERING</span><span class="badge">STEMS</span><span class="badge">VISUALS</span><span class="badge">MUSIC VIDEO</span></div>
+<div class="kicker">Funk Bandit Audio Lab</div>
+<h1>Funk Bandit Studios</h1>
+<p class="sub">Keep the mastering workflow, then add stem separation, visual concepts, storyboards and variable music-video exports.</p>
 </section>
 
 <section class="card">
- <label class="drop" for="fileInput"><strong>Choose a track</strong><div class="tiny">WAV, M4A, MP3, AIFF, and Safari-decodable audio</div><div id="fileName" class="fileName"></div></label>
- <input id="fileInput" type="file" accept="audio/*,.wav,.aif,.aiff,.m4a,.mp3">
- <audio id="audio" hidden></audio>
- <div class="transport">
-  <button id="play" class="play" disabled aria-label="Play">▶</button>
-  <div class="track">
-   <div class="trackTop"><span id="time">0:00</span><span id="duration">0:00</span></div>
-   <input id="seek" class="seek" type="range" min="0" max="1000" value="0" disabled>
-  </div>
- </div>
+<h2>1. Track workspace</h2>
+<label class="drop" for="studioTrack"><strong>Choose a track</strong><div class="tiny">WAV, M4A, MP3 or AIFF</div><div id="studioTrackName" class="fileName"></div></label>
+<input id="studioTrack" type="file" accept="audio/*,.wav,.aif,.aiff,.m4a,.mp3">
+<div class="grid">
+<div class="field"><label for="songTitle">Song title</label><input id="songTitle" placeholder="Desperado / Funk Bandit"></div>
+<div class="field"><label for="durationSeconds">Duration in seconds</label><input id="durationSeconds" type="number" min="1" value="180"></div>
+</div>
 </section>
 
 <section class="card">
- <h2>Smart analysis</h2>
- <canvas id="wave" width="780" height="150"></canvas>
- <div class="grid" style="margin-top:10px">
-  <div class="stat"><span>Tempo</span><b id="bpm">— BPM</b></div>
-  <div class="stat"><span>Likely meter</span><b id="meterText">—</b></div>
-  <div class="stat"><span>Transients</span><b id="transients">—</b></div>
-  <div class="stat"><span>Dynamic range</span><b id="dynamics">—</b></div>
- </div>
- <div class="actions">
-  <button id="analyze" class="btn secondary" disabled>Analyze Track</button>
-  <button id="apply" class="btn" disabled>Apply Recommendations</button>
- </div>
- <div id="analysisBox" hidden>
-  <div class="score"><div id="ring" class="ring">—</div><div><strong>Mix health</strong><div class="tiny">A practical estimate—not a substitute for your ears.</div></div></div>
-  <div id="recs" class="recs"></div>
- </div>
+<h2>2. Stem splitter</h2>
+<p class="tiny">The browser UI is ready. Actual AI separation must run through a secure server—never expose service keys in GitHub Pages or an iPhone JSON file.</p>
+<div class="field"><label for="stemMode">Output</label><select id="stemMode"><option value="instrumental">Instrumental — remove vocals</option><option value="vocals">Vocals only</option><option value="four-stem">Vocals, drums, bass and other</option></select></div>
+<button id="splitVocals" data-ai-action class="btn green" disabled>Strip / Split Vocals</button>
 </section>
 
 <section class="card">
- <h2>Spatial engine</h2>
- <p class="tiny">Automatically adjusts the mid/side balance in realtime. It widens side information while keeping the vocal, kick, snare, and low-end center more stable.</p>
- <button id="spatial" class="btn spatial" style="width:100%" disabled>✦ Make Track Spatial</button>
- <div class="row"><label><span class="name">Spatial Amount</span><span class="freq">Side gain relative to the center</span></label><span id="widthVal" class="value">100%</span></div>
- <input id="width" type="range" min="0" max="150" step="1" value="100">
+<h2>3. Visual director</h2>
+<div class="field"><label for="visualStyle">Visual style</label><textarea id="visualStyle" placeholder="Futuristic outlaw funk, neon cosmic desert, dirty chrome, aggressive camera movement..."></textarea></div>
+<div class="field"><label for="lyrics">Lyrics with section labels</label><textarea id="lyrics" placeholder="[Intro]&#10;Desperado...&#10;&#10;[Verse 1]&#10;I don't clean it up..."></textarea></div>
+<div class="actions">
+<button id="generateVisual" data-ai-action class="btn secondary" disabled>Make Concept Visual</button>
+<button id="makeStoryboard" data-ai-action class="btn" disabled>Build Storyboard</button>
+</div>
+<div id="visualPreview" style="margin-top:12px"></div>
+<div class="field"><label for="storyboardOutput">Storyboard JSON</label><textarea id="storyboardOutput" placeholder="Your scene plan appears here."></textarea></div>
 </section>
 
 <section class="card">
- <h2>Mastering controls</h2>
- <label><strong>Preset</strong></label>
- <select id="preset">
-  <option value="balanced">Balanced Clean Master</option>
-  <option value="crisp">Crisp + Razor Transients</option>
-  <option value="warm">Warm + Smooth</option>
-  <option value="loud">Loud but Controlled</option>
-  <option value="vocal">Vocal Clarity</option>
- </select>
- <div id="bands"></div>
- <div class="row"><label><span class="name">Punch / Compression</span><span class="freq">Controls attack and dynamic impact</span></label><span id="punchVal" class="value">+1.5 dB</span></div>
- <input id="punch" type="range" min="-6" max="9" step=".1" value="1.5">
- <div class="row"><label><span class="name">Output Gain</span><span class="freq">Final level after processing</span></label><span id="outputVal" class="value">0.0 dB</span></div>
- <input id="output" type="range" min="-12" max="6" step=".1" value="0">
- <details><summary>Mini DAW controls</summary>
-  <div class="row"><label><span class="name">Tempo</span><span class="freq">Realtime playback speed and rendered length</span></label><span id="tempoVal" class="value">0.0%</span></div>
-  <input id="tempo" type="range" min="-8" max="8" step=".5" value="0">
- </details>
+<h2>4. Variable export</h2>
+<div class="grid">
+<div class="field"><label for="exportAspect">Aspect</label><select id="exportAspect"><option value="vertical">Vertical 9:16</option><option value="square">Square 1:1</option><option value="landscape">Landscape 16:9</option><option value="landscape4k">Landscape 4K</option></select></div>
+<div class="field"><label for="exportContainer">Format</label><select id="exportContainer"><option value="mp4">MP4</option><option value="mov">MOV</option><option value="webm">WebM</option></select></div>
+<div class="field"><label for="exportQuality">Quality</label><select id="exportQuality"><option value="draft">Draft</option><option value="standard">Standard</option><option value="high">High</option><option value="maximum">Maximum</option></select></div>
+<div class="field"><label for="exportFps">Frame rate</label><select id="exportFps"><option>24</option><option selected>30</option><option>60</option></select></div>
+</div>
+<p class="tiny">Resolution: <strong id="resolution">—</strong></p>
+<label><input id="preserveAudio" type="checkbox" checked> Preserve original track as final audio</label>
+<button id="generateVideo" data-ai-action class="btn green" style="width:100%;margin-top:14px" disabled>Generate Full Music Video</button>
+<pre id="jobOutput"></pre>
+<div id="studioStatus" class="status">Choose a track.</div>
 </section>
 
 <section class="card">
- <div class="actions"><button id="render" class="btn" disabled>Render Master</button><button id="reset" class="btn secondary">Reset</button></div>
- <div id="status" class="status"></div><div class="meter"><div id="meterFill"></div></div>
- <button id="download" class="btn" style="width:100%;margin-top:12px;background:linear-gradient(135deg,#0ca5c2,#16a77b)" disabled>Export 24-bit WAV</button>
+<h2>5. iPhone JSON control file</h2>
+<p class="tiny">Import a custom JSON configuration from the Files app. It controls features and export defaults, but contains no secret keys.</p>
+<label class="btn secondary" for="importConfig" style="display:grid;place-items:center;cursor:pointer">Import JSON Config</label>
+<input id="importConfig" type="file" accept=".json,application/json">
+<div id="configStatus" class="status">Loading configuration…</div>
 </section>
-<div class="footer">All audio processing stays on your device.</div>
+
+<div class="footer">Frontend-safe build. Audio never leaves the device unless you explicitly use an AI backend feature.</div>
 </main>
-
-<script>
-const $=id=>document.getElementById(id);
-const bandDefs=[
-{id:'sub',name:'Sub',freq:'20–60 Hz',type:'lowshelf',hz:55,min:-12,max:12,val:0},
-{id:'bass',name:'Bass / Kick Weight',freq:'60–150 Hz',type:'peaking',hz:95,min:-12,max:12,val:1},
-{id:'lowmid',name:'Low Mids / Mud',freq:'150–600 Hz',type:'peaking',hz:320,min:-12,max:9,val:-2},
-{id:'mid',name:'Mids / Boxiness',freq:'600 Hz–2 kHz',type:'peaking',hz:900,min:-12,max:9,val:-1},
-{id:'presence',name:'Presence / Vocal Clarity',freq:'2–6 kHz',type:'peaking',hz:3200,min:-9,max:12,val:1.5},
-{id:'harsh',name:'Harshness / De-ess',freq:'4–9 kHz',type:'peaking',hz:6500,min:-12,max:0,val:-2},
-{id:'air',name:'Air / Brilliance',freq:'9–20 kHz',type:'highshelf',hz:11000,min:-9,max:12,val:1}
-];
-for(const b of bandDefs)$('bands').insertAdjacentHTML('beforeend',`<div class="row"><label><span class="name">${b.name}</span><span class="freq">${b.freq} · center ${b.hz>=1000?(b.hz/1000)+' kHz':b.hz+' Hz'}</span></label><span id="${b.id}Val" class="value">${fmt(b.val)}</span></div><input id="${b.id}" type="range" min="${b.min}" max="${b.max}" step=".1" value="${b.val}">`);
-function fmt(v){v=Number(v);return`${v>=0?'+':''}${v.toFixed(1)} dB`}
-function timeFmt(s){if(!isFinite(s))return'0:00';return`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`}
-let buffer=null,fileURL=null,outBlob=null,ctx=null,media=null,nodes={},raf=null,recommendations=null;
-const audio=$('audio');
-
-const presets={
-balanced:{sub:0,bass:1,lowmid:-2,mid:-1,presence:1.5,harsh:-2,air:1,punch:1.5,output:0,width:100},
-crisp:{sub:-.5,bass:.5,lowmid:-2.5,mid:-1,presence:3.5,harsh:-2.5,air:3,punch:3,output:-.5,width:108},
-warm:{sub:1.5,bass:2.5,lowmid:-1,mid:.5,presence:0,harsh:-1.5,air:-.5,punch:.5,output:0,width:103},
-loud:{sub:1,bass:2,lowmid:-2.5,mid:-1,presence:2,harsh:-2,air:1.5,punch:4,output:-.5,width:105},
-vocal:{sub:-1,bass:-1,lowmid:-3,mid:-1.5,presence:4,harsh:-4,air:2,punch:1,output:0,width:102}
-};
-function setVal(id,v){$(id).value=v;$(id).dispatchEvent(new Event('input'))}
-$('preset').addEventListener('change',e=>Object.entries(presets[e.target.value]).forEach(([k,v])=>setVal(k,v)));
-[...bandDefs.map(x=>x.id),'punch','output'].forEach(id=>$(id).addEventListener('input',()=>{$(id+'Val').textContent=fmt($(id).value);updateLive()}));
-$('width').addEventListener('input',()=>{$('widthVal').textContent=$('width').value+'%';$('spatial').classList.toggle('active',Number($('width').value)>100);updateLive()});
-$('tempo').addEventListener('input',()=>{$('tempoVal').textContent=Number($('tempo').value).toFixed(1)+'%';audio.playbackRate=1+Number($('tempo').value)/100});
-
-$('fileInput').addEventListener('change',async e=>{
- const f=e.target.files[0];if(!f)return;
- if(fileURL)URL.revokeObjectURL(fileURL);fileURL=URL.createObjectURL(f);audio.src=fileURL;$('fileName').textContent=f.name;setStatus('Decoding audio…',12);
- try{
-  const temp=new (window.AudioContext||window.webkitAudioContext)();
-  buffer=await temp.decodeAudioData(await f.arrayBuffer());await temp.close();
-  await setupLive();drawWave(buffer);
-  $('play').disabled=$('seek').disabled=$('analyze').disabled=$('spatial').disabled=$('render').disabled=false;
-  $('duration').textContent=timeFmt(buffer.duration);setStatus('Ready. Press the single play button to hear all changes live.',0)
- }catch(err){console.error(err);setStatus('Could not decode this file. Try WAV or M4A.',0)}
-});
-async function setupLive(){
- if(ctx)return;
- ctx=new (window.AudioContext||window.webkitAudioContext)();media=ctx.createMediaElementSource(audio);
- let prev=media;
- const hp=ctx.createBiquadFilter();hp.type='highpass';hp.frequency.value=24;prev.connect(hp);prev=hp;
- for(const b of bandDefs){const n=ctx.createBiquadFilter();n.type=b.type;n.frequency.value=b.hz;n.Q.value=b.type==='peaking'?1:0.7;prev.connect(n);prev=n;nodes[b.id]=n}
- const comp=ctx.createDynamicsCompressor();comp.knee.value=18;comp.attack.value=.008;comp.release.value=.14;prev.connect(comp);prev=comp;nodes.comp=comp;
-
- // Realtime M/S matrix: L/R -> Mid/Side -> width -> L/R.
- const split=ctx.createChannelSplitter(2),midL=ctx.createGain(),midR=ctx.createGain(),sideL=ctx.createGain(),sideR=ctx.createGain();
- const mid=ctx.createGain(),side=ctx.createGain(),sideGain=ctx.createGain(),outL=ctx.createGain(),outR=ctx.createGain(),merge=ctx.createChannelMerger(2);
- prev.connect(split);split.connect(midL,0);split.connect(midR,1);split.connect(sideL,0);split.connect(sideR,1);
- midL.gain.value=.5;midR.gain.value=.5;sideL.gain.value=.5;sideR.gain.value=-.5;
- midL.connect(mid);midR.connect(mid);sideL.connect(side);sideR.connect(side);side.connect(sideGain);
- mid.connect(outL);sideGain.connect(outL);mid.connect(outR);
- const inv=ctx.createGain();inv.gain.value=-1;sideGain.connect(inv);inv.connect(outR);
- outL.connect(merge,0,0);outR.connect(merge,0,1);nodes.sideGain=sideGain;prev=merge;
-
- const gain=ctx.createGain();prev.connect(gain);prev=gain;nodes.gain=gain;
- const analyser=ctx.createAnalyser();analyser.fftSize=256;prev.connect(analyser);analyser.connect(ctx.destination);nodes.analyser=analyser;updateLive()
-}
-function updateLive(){
- if(!ctx)return;const t=ctx.currentTime;
- for(const b of bandDefs)nodes[b.id].gain.setTargetAtTime(Number($(b.id).value),t,.02);
- const p=Number($('punch').value);nodes.comp.threshold.setTargetAtTime(-18-p*1.15,t,.02);nodes.comp.ratio.setTargetAtTime(Math.max(1,2.1+p*.2),t,.02);
- nodes.sideGain.gain.setTargetAtTime(Number($('width').value)/100,t,.025);
- nodes.gain.gain.setTargetAtTime(Math.pow(10,Number($('output').value)/20),t,.02)
-}
-$('play').addEventListener('click',async()=>{if(ctx?.state==='suspended')await ctx.resume();if(audio.paused)audio.play();else audio.pause()});
-audio.addEventListener('play',()=>{$('play').textContent='❚❚';startMeter()});audio.addEventListener('pause',()=>{$('play').textContent='▶';stopMeter()});
-audio.addEventListener('ended',()=>{$('play').textContent='▶';stopMeter()});
-audio.addEventListener('timeupdate',()=>{$('time').textContent=timeFmt(audio.currentTime);if(audio.duration)$('seek').value=audio.currentTime/audio.duration*1000});
-$('seek').addEventListener('input',()=>{if(audio.duration)audio.currentTime=Number($('seek').value)/1000*audio.duration});
-$('spatial').addEventListener('click',()=>{const active=Number($('width').value)>100;setVal('width',active?100:125);setStatus(active?'Spatial mode off. Width returned to neutral.':'Spatial mode on: sides widened, center retained.',0)});
-
-function startMeter(){stopMeter();const d=new Uint8Array(nodes.analyser.frequencyBinCount);const loop=()=>{nodes.analyser.getByteTimeDomainData(d);let p=0;for(const v of d)p=Math.max(p,Math.abs(v-128)/128);$('meterFill').style.width=Math.min(100,p*112)+'%';raf=requestAnimationFrame(loop)};loop()}
-function stopMeter(){if(raf)cancelAnimationFrame(raf);raf=null}
-
-function drawWave(buf){
- const c=$('wave'),g=c.getContext('2d'),data=buf.getChannelData(0);g.clearRect(0,0,c.width,c.height);
- const grad=g.createLinearGradient(0,0,c.width,0);grad.addColorStop(0,'#9759ff');grad.addColorStop(.5,'#42e6ff');grad.addColorStop(1,'#ff57d8');g.strokeStyle=grad;g.lineWidth=2;g.beginPath();
- const step=Math.max(1,Math.floor(data.length/c.width));
- for(let x=0;x<c.width;x++){let min=1,max=-1;for(let i=0;i<step;i++){const v=data[x*step+i]||0;min=Math.min(min,v);max=Math.max(max,v)}g.moveTo(x,(1+min)*c.height/2);g.lineTo(x,(1+max)*c.height/2)}g.stroke()
-}
-$('analyze').addEventListener('click',analyze);
-function analyze(){
- if(!buffer)return;setStatus('Scanning dynamics, tonal balance, and transients…',35);
- setTimeout(()=>{
-  const d=buffer.getChannelData(0),sr=buffer.sampleRate,hop=Math.max(256,Math.floor(sr*.01));let rmsSum=0,peak=0,trans=0,last=0,frames=0;
-  const env=[];
-  for(let i=0;i<d.length;i+=hop){let s=0,p=0;for(let j=0;j<hop&&i+j<d.length;j++){const v=d[i+j];s+=v*v;p=Math.max(p,Math.abs(v))}const r=Math.sqrt(s/hop);env.push(r);rmsSum+=r;peak=Math.max(peak,p);if(r-last>.055)trans++;last=r;frames++}
-  const rms=rmsSum/frames,crest=20*Math.log10((peak+.000001)/(rms+.000001));
-  const bpmEst=estimateBPM(env,hop/sr);
-  const dyn=Math.max(4,Math.min(18,crest));const score=Math.round(Math.max(55,Math.min(96,91-Math.abs(11-dyn)*2-(peak>.99?8:0))));
-  const rec={lowmid:rms>.18?-2.8:-1.5,presence:crest<8?2.6:1.7,harsh:peak>.98?-3.2:-2,air:rms<.1?2.3:1.2,punch:crest<8?2.2:1.2,output:peak>.98?-1.2:-.4,width:buffer.numberOfChannels>1?112:100};
-  recommendations=rec;
-  $('bpm').textContent=(bpmEst||'—')+' BPM';$('meterText').textContent=bpmEst&&bpmEst%3<1?'6/8 or 3/4':'4/4 likely';$('transients').textContent=trans.toLocaleString();$('dynamics').textContent=dyn.toFixed(1)+' dB';
-  $('ring').textContent=score+'%';$('ring').style.background=`conic-gradient(var(--cyan) ${score}%,rgba(255,255,255,.08) 0)`;
-  const items=[
-   `Reduce low-mid buildup to ${fmt(rec.lowmid)}`,
-   `Set vocal presence to ${fmt(rec.presence)}`,
-   `Control harsh highs at ${fmt(rec.harsh)}`,
-   `Set punch to ${fmt(rec.punch)}`,
-   buffer.numberOfChannels>1?`Use ${rec.width}% spatial width while protecting the center`:'Keep mono width unchanged'
-  ];
-  $('recs').innerHTML=items.map(x=>`<div class="rec">✓ ${x}</div>`).join('');$('analysisBox').hidden=false;$('apply').disabled=false;setStatus('Analysis complete. Apply the suggestions or adjust any slider yourself.',0)
- },100)
-}
-function estimateBPM(env,dt){
- const min=70,max=160;let best=0,bestScore=0;
- for(let bpm=min;bpm<=max;bpm++){const lag=Math.round((60/bpm)/dt);let s=0;for(let i=lag;i<env.length;i++)s+=env[i]*env[i-lag];if(s>bestScore){bestScore=s;best=bpm}}
- return best
-}
-$('apply').addEventListener('click',()=>{if(!recommendations)return;Object.entries(recommendations).forEach(([k,v])=>setVal(k,v));setStatus('Recommendations applied. Press play to hear them in realtime.',0)});
-$('reset').addEventListener('click',()=>{$('preset').value='balanced';Object.entries(presets.balanced).forEach(([k,v])=>setVal(k,v));setVal('tempo',0);setStatus('Controls reset.',0)});
-
-$('render').addEventListener('click',async()=>{
- if(!buffer)return;setStatus('Rendering your cosmic master…',50);$('render').disabled=true;
- try{
-  const rate=1+Number($('tempo').value)/100,outLen=Math.ceil(buffer.length/rate);
-  const off=new OfflineAudioContext(2,outLen,buffer.sampleRate),src=off.createBufferSource();src.buffer=buffer;src.playbackRate.value=rate;let prev=src;
-  const hp=off.createBiquadFilter();hp.type='highpass';hp.frequency.value=24;prev.connect(hp);prev=hp;
-  for(const b of bandDefs){const n=off.createBiquadFilter();n.type=b.type;n.frequency.value=b.hz;n.Q.value=b.type==='peaking'?1:.7;n.gain.value=Number($(b.id).value);prev.connect(n);prev=n}
-  const comp=off.createDynamicsCompressor(),p=Number($('punch').value);comp.threshold.value=-18-p*1.15;comp.ratio.value=Math.max(1,2.1+p*.2);comp.knee.value=18;comp.attack.value=.008;comp.release.value=.14;prev.connect(comp);prev=comp;
-  const split=off.createChannelSplitter(2),mL=off.createGain(),mR=off.createGain(),sL=off.createGain(),sR=off.createGain(),mid=off.createGain(),side=off.createGain(),sg=off.createGain(),oL=off.createGain(),oR=off.createGain(),merge=off.createChannelMerger(2);
-  prev.connect(split);split.connect(mL,0);split.connect(mR,1);split.connect(sL,0);split.connect(sR,1);mL.gain.value=.5;mR.gain.value=.5;sL.gain.value=.5;sR.gain.value=-.5;mL.connect(mid);mR.connect(mid);sL.connect(side);sR.connect(side);side.connect(sg);sg.gain.value=Number($('width').value)/100;mid.connect(oL);sg.connect(oL);mid.connect(oR);const inv=off.createGain();inv.gain.value=-1;sg.connect(inv);inv.connect(oR);oL.connect(merge,0,0);oR.connect(merge,0,1);prev=merge;
-  const gain=off.createGain();gain.gain.value=Math.pow(10,Number($('output').value)/20);prev.connect(gain);gain.connect(off.destination);src.start();
-  const rendered=await off.startRendering();outBlob=encodeWav24(rendered);$('download').disabled=false;setStatus('Master rendered. Export the 24-bit WAV below.',100)
- }catch(e){console.error(e);setStatus('Rendering failed on this device or file.',0)}
- finally{$('render').disabled=false}
-});
-$('download').addEventListener('click',()=>{if(!outBlob)return;const a=document.createElement('a');a.href=URL.createObjectURL(outBlob);a.download='Funk_Bandit_Cosmic_Master.wav';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1500)});
-function setStatus(t,p){$('status').textContent=t;$('meterFill').style.width=p+'%'}
-function encodeWav24(buf){
- const ch=2,sr=buf.sampleRate,len=buf.length,bytes=3,ab=new ArrayBuffer(44+len*ch*bytes),v=new DataView(ab);
- const str=(o,s)=>[...s].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));str(0,'RIFF');v.setUint32(4,36+len*ch*bytes,true);str(8,'WAVE');str(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,ch,true);v.setUint32(24,sr,true);v.setUint32(28,sr*ch*bytes,true);v.setUint16(32,ch*bytes,true);v.setUint16(34,24,true);str(36,'data');v.setUint32(40,len*ch*bytes,true);
- const L=buf.getChannelData(0),R=buf.numberOfChannels>1?buf.getChannelData(1):L;let o=44;
- for(let i=0;i<len;i++)for(const x of [L[i],R[i]]){let s=Math.max(-1,Math.min(1,x));let n=s<0?Math.round(s*8388608):Math.round(s*8388607);v.setUint8(o++,n&255);v.setUint8(o++,(n>>8)&255);v.setUint8(o++,(n>>16)&255)}
- return new Blob([ab],{type:'audio/wav'})
-}
-if('serviceWorker'in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js'));
-</script>
+<script src="./bandit-studios-addon.js"></script>
+<script>if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js"));</script>
 </body>
 </html>

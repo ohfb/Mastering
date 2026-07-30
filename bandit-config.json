@@ -1,0 +1,57 @@
+{
+  "appName": "Funk Bandit Studios",
+  "version": "1.0.0",
+  "features": {
+    "mastering": true,
+    "stemSplitter": true,
+    "promptBuilder": true,
+    "visualLab": true,
+    "musicVideo": true,
+    "bluetoothLatencyCalibration": true
+  },
+  "api": {
+    "baseUrl": "",
+    "routes": {
+      "splitStems": "/api/stems",
+      "storyboard": "/api/storyboard",
+      "generateVideo": "/api/video"
+    }
+  },
+  "exports": {
+    "default": {
+      "container": "mp4",
+      "aspect": "vertical",
+      "quality": "high",
+      "fps": 30
+    },
+    "aspects": {
+      "vertical": {
+        "width": 1080,
+        "height": 1920
+      },
+      "square": {
+        "width": 1080,
+        "height": 1080
+      },
+      "landscape": {
+        "width": 1920,
+        "height": 1080
+      },
+      "landscape4k": {
+        "width": 3840,
+        "height": 2160
+      }
+    },
+    "containers": [
+      "mp4",
+      "mov",
+      "webm"
+    ],
+    "qualities": [
+      "draft",
+      "standard",
+      "high",
+      "maximum"
+    ]
+  }
+}
